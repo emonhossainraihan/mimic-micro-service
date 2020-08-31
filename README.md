@@ -1,4 +1,4 @@
-## This is test project where I try to build(mimicking) a small microservice frontend
+## This is a test project where I trying to build(mimicking) a small microservice frontend
 
 
 | service ENDPOINT      | available HTTP method | description                                            |
@@ -65,6 +65,19 @@ getUser()
 ### Kubernetes Dashboard
 
 - [doc link](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui)
+
+### Updating the image used by a deployment
+
+- The deployment must be using the 'latest' tag in the pod spec
+- Make an update to your code 
+- Build the image 
+- Push the image to docker hub
+- Run `kubectl rollout restart deployment <deployment_name>`
+
+### To make connection with different pods/deployments
+
+- Create a service
+- Change API endpoint for container as they are pod/deployment now (http://<s>localhost</s>*service_name*:port)
 
 ### remaining Issues to fix
 

@@ -27,11 +27,11 @@ app.post('/events', async (req, res) => {
   //   console.log(e);
   // }
 
-  const promise1 = axios.post('http://localhost:4000/events', event)
-  const promise2 = axios.post('http://localhost:4001/events', event)
-  const promise3 = axios.post('http://localhost:4002/events', event)
-  const promise4 = axios.post('http://localhost:4003/events', event)
-  const promises = [promise1, promise2, promise3, promise4];
+  const promise1 = axios.post('http://posts-clusterip-srv:4000/events', event)
+  // const promise2 = axios.post('http://localhost:4001/events', event)
+  // const promise3 = axios.post('http://localhost:4002/events', event)
+  // const promise4 = axios.post('http://localhost:4003/events', event)
+  const promises = [promise1]; //, promise2, promise3, promise4
 
   Promise.allSettled(promises).
     then((results) => results.forEach((result) => console.log(result.status)));
