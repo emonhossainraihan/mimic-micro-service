@@ -9,10 +9,50 @@ build:
     push: false 
   artifacts: 
     - image: emonhossainraihan/client 
-      context: client 
+      context: frontend # defines the context where the image is being built
       docker: 
         dockerfile: Dockerfile 
       sync: 
         manual: 
           - src: 'src/**/*.js'
+            dest: .
+    - image: emonhossainraihan/comments 
+      context: comments 
+      docker: 
+        dockerfile: Dockerfile 
+      sync: 
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: emonhossainraihan/posts 
+      context: posts 
+      docker: 
+        dockerfile: Dockerfile 
+      sync: 
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: emonhossainraihan/newfeature 
+      context: newFeature 
+      docker: 
+        dockerfile: Dockerfile 
+      sync: 
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: emonhossainraihan/query 
+      context: query 
+      docker: 
+        dockerfile: Dockerfile 
+      sync: 
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: emonhossainraihan/event-bus 
+      context: eventbus  
+      docker: 
+        dockerfile: Dockerfile 
+      sync: 
+        manual: 
+          - src: '*.js'
             dest: .

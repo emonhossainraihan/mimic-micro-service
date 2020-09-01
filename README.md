@@ -58,11 +58,12 @@ Once you deploy kubernetes resources using Yaml file with kubectl command, it se
 ### To make connection with different pods/deployments
 
 - Create a service
-- Change API endpoint for container as they are pod/deployment now (http://<s>localhost</s>*service_name*:port)
+- Change API endpoint inside container as other container are running as pod/deployment now (http://<s>localhost</s>*service_name*:port)
 
 
 ![](https://i.imgur.com/LhKPb0L.png)
 
+### Install [tree.exe](http://gnuwin32.sourceforge.net/packages/tree.htm)
 
 ### remaining Issues to fix
 
