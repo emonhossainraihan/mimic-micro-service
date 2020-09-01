@@ -1,5 +1,6 @@
-## This is a test project where I trying to build(mimicking) a small microservice frontend
+### This is a test project where I trying to build(mimicking) a small microservice frontend :sparkling_heart:
 
+## Before integrate Kubernetes :innocent:
 
 | service ENDPOINT      | available HTTP method | description                                            |
 | --------------------- | --------------------- | ------------------------------------------------------ |
@@ -10,14 +11,41 @@
 | http://localhost:4005 | GET/POST              | eventbus service: watch event and dispatch event       |
 | http://localhost:3000 | -                     | frontend                                               |
 
+## After integrate Kubernetes with `ingress-nginx` tweaking with localhost into posts.com :dizzy_face:
+
+```
+spec:
+  rules:
+    - host: posts.com 
+      http: 
+        paths: 
+          - path: /posts/create
+            backend: 
+              serviceName: posts-clusterip-srv
+              servicePort: 4000
+          - path: /posts
+            backend: 
+              serviceName: query-srv
+              servicePort: 4002
+          - path: /posts/?(.*)/comments
+            backend: 
+              serviceName: comments-srv
+              servicePort: 4001
+          - path: /?(.*)
+            backend:
+              serviceName: client-srv 
+              servicePort: 3000
+```
 
 ## What is kubernetes?
 
+<Details>
+<Summary>Detail</Summary>
 
 ![](https://i.imgur.com/SILk78d.jpg)
 
 
-Kubernetes enable you to use the cluster as if it is signle PC. You don’t need to care the detail of the infrastructure. Just declare the what you want in yaml file, you will get what you want.
+  **Kubernetes** enable you to use the cluster as if it is signle PC. You don’t need to care the detail of the infrastructure. Just declare the what you want in yaml file, you will get what you want.
 
 - When you use Kubernetes, you can use kubectl command to control the kubernetes cluster
 - If you want to orchestrate the container in Kubernetes, you can use yaml file
@@ -27,17 +55,24 @@ Kubernetes enable you to use the cluster as if it is signle PC. You don’t need
 - Kubernetes Pods are mortal. They are born and when they die, they are not resurrected. If you use a Deployment to run your app, it can create and destroy Pods dynamically
 - Each Pod gets its own IP address, however, in a Deployment, the set of Pods running in one moment in time could be different from the set of Pods running that application a moment later
 
-This leads to a problem: if some set of Pods (call them “backends”) provides functionality to other Pods (call them “frontends”) inside your cluster, how do the frontends find out and keep track of which IP address to connect to, so that the frontend can use the backend part of the workload? Here come **Services**
+This leads to a problem: if some set of Pods (call them “backends”) provides functionality to other Pods (call them “frontends”) inside your cluster, *how do the frontends find out and keep track of which IP address to connect to, so that the frontend can use the backend part of the workload?* Here come **Services**
 
 
 ![](https://i.imgur.com/Rup9o7f.jpg)
 
-Kubernetes has several Master nodes and Worker nodes. Your containers work on Worker nodes. Worker nodes scales.
+Kubernetes has several **Master nodes** and **Worker nodes**. Your containers work on Worker nodes. Worker nodes scales.
 Once you deploy kubernetes resources using Yaml file with kubectl command, it send Post request to the API server. The API server store the data into [ectd](https://github.com/etcd-io/etcd)(is a distributed reliable key-value store for the most critical data of a distributed system), which is the distributed key value store. Other resources like Controller Manager, Scheduler, observe the change state of the API server. When you create a `some.yaml` file with a deployment then `kubectl create -f some.yaml` It send the yaml data to the API Server. It create a Deployment object on the API Server. Deployment controller detect the change of the deployment, it create ReplicaSet object on the API Server. The Replica Set Controller detect the change then according to the number of replica, create Pod objects. The Scheduler, that is in charge of the pod resource allocation, commnd the kubelet, which reside on every worker nodes, execute docker command and create containers. Every worker nodes have a kube proxy to control the routing. For example, If you create a service object on the API Server, Endpoint Controller create an Endpoint object on the API Server. Kube Proxy watch the API server Endpoint state, then configure iptable to route the endpoint to the container.
 
 
 ![](https://i.imgur.com/5rtOHPQ.png)
 
+
+</Details>
+
+## Bad things with this Application
+
+- flow of events inside this application is important. :anguished:
+- If commentCreated Event reach before postCreated event then our entire application will break. :disappointed_relieved:
 
 ## Things I learnt via this project 
 
@@ -47,7 +82,7 @@ Once you deploy kubernetes resources using Yaml file with kubectl command, it se
 
 ### Kubernetes Dashboard [link](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui)
 
-### Updating the image used by a deployment
+### Updating the image used by Kubernetes deployment object
 
 - The deployment must be using the 'latest' tag in the pod spec
 - Make an update to your code 
@@ -63,9 +98,10 @@ Once you deploy kubernetes resources using Yaml file with kubectl command, it se
 
 ![](https://i.imgur.com/LhKPb0L.png)
 
-### Install [tree.exe](http://gnuwin32.sourceforge.net/packages/tree.htm)
+### Install [tree.exe](http://gnuwin32.sourceforge.net/packages/tree.htm) to print directory in windows machine :heart_eyes:
 
-### remaining Issues to fix
 
-- <s>when event bus got error at axios.post() then it haunt the process that why comment is not moderated after the query server alive</s>
+### remaining Issues to fix :confounded:
+
+- <s>when event bus got error at axios.post() then it haunt the process that why comment is not moderated after the query server alive</s> That Solved by `Promise.allSettled(promises)`
 - need refresh to fetch updated data in react application
