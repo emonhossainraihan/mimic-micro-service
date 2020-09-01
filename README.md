@@ -41,30 +41,11 @@ Once you deploy kubernetes resources using Yaml file with kubectl command, it se
 
 ## Things I learnt via this project 
 
-### `fetch` usecase:
-
-```js
-function getUser(name){
- fetch(`http://localhost:4002/posts`)
-//   .then(function(response) {
-//     return response.json();
-//   })
-  .then(function(data) {
-    console.log(data);
-  });
-};
-getUser()
-```
-
 ### `Promise.allSettled(promises)`
 
-### axios concurrent mode
+### axios concurrent mode [link](https://www.pluralsight.com/guides/all-need-to-know-about-axios)
 
-[Details](https://www.pluralsight.com/guides/all-need-to-know-about-axios)
-
-### Kubernetes Dashboard
-
-- [doc link](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui)
+### Kubernetes Dashboard [link](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui)
 
 ### Updating the image used by a deployment
 
@@ -78,6 +59,10 @@ getUser()
 
 - Create a service
 - Change API endpoint for container as they are pod/deployment now (http://<s>localhost</s>*service_name*:port)
+
+
+![](https://i.imgur.com/LhKPb0L.png)
+
 
 ### remaining Issues to fix
 

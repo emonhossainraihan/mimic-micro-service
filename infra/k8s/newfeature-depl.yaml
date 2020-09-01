@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newfeature-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newfeature
+  template:
+    metadata:
+      labels:
+        app: newfeature
+    spec:
+      containers:
+      - name: newfeature
+        image: emonhossainraihan/newfeature
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: newfeature-srv 
+spec: 
+  selector: 
+    app: newfeature
+  ports: 
+    - name: newfeature 
+      protocol: TCP 
+      port: 4003
+      targetPort: 4003

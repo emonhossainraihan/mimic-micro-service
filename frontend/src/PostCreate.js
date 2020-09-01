@@ -6,15 +6,16 @@ export default function PostCreate({ setPosts }) {
   const [title, setTitle] = useState('');
   const submitHandler = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:4000/posts', { title });
+    await axios.post('http://posts.com/posts/create', { title });
 
     // try to reload/refresh my posts again 
     // setPosts in ./PostList.js 
-    async function refreshPosts(setPosts) {
-      const res = await axios.get('http://localhost:4002/posts')
-      // const data = await res.json()
-      await setPosts(res.data)
-    }
+    // async function refreshPosts(setPosts) {
+    //   const res = await axios.get('http://posts.com/posts')
+    //   // const data = await res.json()
+    //   await setPosts(res.data)
+    // }
+    setTitle('')
   };
 
   return (

@@ -9,7 +9,7 @@ function PostList() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await axios.get('http://localhost:4002/posts')
+        const res = await axios.get('http://posts.com/posts')
         // const data = await res.json()
         await setPosts(res.data)
       } catch (e) {
